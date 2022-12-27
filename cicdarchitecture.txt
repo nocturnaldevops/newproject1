@@ -1,0 +1,128 @@
+3 EC2 instances   (DevServer | QA | Prod)
+
+OS :                  ubuntu 20.04
+Configuration:  t2.micro
+
+Collectively on all the servers:   (Shell Script)
+==================================
+1) apt registry update
+2) Java
+
+shellscript: (Advanced: Userdata)  installs java and updates apt repo on all servers
+#!/bin/bash
+sudo apt-get update
+sudo apt-get install -y default-jdk
+
+
+Change the Hostnames (Optional)
+1. on devserver
+    sudo vim /etc/hostname
+    remove the existing hostname
+    update the new hostname (devserver)
+    restart the server: sudo init 6
+2. on qaserver
+    sudo vim /etc/hostname
+    remove the existing hostname
+    update the new hostname (qaserver)
+    restart the server: sudo init 6
+3. on prodserver
+    sudo vim /etc/hostname
+    remove the existing hostname
+    update the new hostname (prodserver)
+    restart the server: sudo init 6
+
+
+On a DevServer/JenkinsServer
+Install Jenkins and maven:
+=====================
+site: jenkins.io/  - ubuntu/debian
+copy the commands and run on jenkins server
+install jenkins
+
+To confirm jenkins installation: sudo systemctl status jenkins
+                                                   http://publicipjenkins:8080
+
+To Install maven: sudo apt-get install -y maven
+To confirm maven installation : mvn -v
+
+To configure Jenkins Application:
+-----------------------------------------------
+http://pubipjenkinsserver:8080
+unlock jenkins (path provided /var/lib/jenkins/secrets/initialAdminPassword)
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+add password
+customize jenkins: install suggested plugins
+
+Create a user account: (First admin user account)
+add user details and create an admin account
+
+
+
+
+Install tomcat on QA Server
+======================
+sudo apt-get install -y tomcat9 tomcat9-admin
+To confirm tomcat is installed:  sudo systemctl status tomcat9
+                                                   http://pubipqaserver:8080
+Create a user in tomcat:
+--------------------------------
+sudo vim /etc/tomcat9/tomcat-users.xml
+<user username="___" password="---" roles="manager-script"/>
+sudo service tomcat9 restart
+
+Install tomcat on Prod Server
+======================
+sudo apt-get install -y tomcat9 tomcat9-admin
+To confirm tomcat is installed:  sudo systemctl status tomcat9
+                                                   http://pubipqaserver:8080
+Create a user in tomcat:
+--------------------------------
+sudo vim /etc/tomcat9/tomcat-users.xml
+<user username="___" password="---" roles="manager-script"/>
+sudo service tomcat9 restart
+
+
+==================================================================================
+Generate ssh keys on a jenkins server:
+on Jenkins Server
+ssh-keygen
+Enter thrice
+
+on QAServer:
+===========
+sudo passwd ubuntu
+assign a password to ubuntu user
+sudo vim /etc/ssh/sshd_config
+PasswordAuthentication: no to yes
+save and quit the document 
+restart ssh service: sudo service ssh restart
+
+on ProdServer:
+============
+sudo passwd ubuntu
+assign a password to ubuntu user
+sudo vim /etc/ssh/sshd_config
+PasswordAuthentication: no to yes
+save and quit the document 
+restart ssh service: sudo service ssh restart
+
+
+
+Connect to Jenkins Server:
+======================
+Copy SSH keys from JenkinsServer to QA Server
+ssh-copy-id ubuntu@<privateip of qa>
+Copy SSH keys from JenkinsServer to Prod Server
+ssh-copy-id ubuntu@<Privateipofprod>
+
+
+
+
+
+
+To address timeout issues
+=====================
+sudo vim /etc/ssh/sshd_config
+at the end of the file, add
+ClientAliveInterval 60  (save and quit)
+sudo service ssh restart

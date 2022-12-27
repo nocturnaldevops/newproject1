@@ -1,0 +1,40 @@
+Version Controlling: This is the process of maintaining multiple versions of the code in the Version Controlling System (VCS). The Version Controlling System accepts the project uploads from the entire team and creates an integrated project out of all these uploads. Next time when the developers download the code from the version controlling system, they can see the work done by the entire team. Version Controlling System also preserve older and later versions of the code so that at any point of time the developers can toggle betwen any version. 
+
+Version Controlling System also keeps a track of who's maintaining what sort of changes. 
+Version Controlling is categorized into two types: 
+1. Centralized Version Controlling
+2. Distributed Version Controlling
+
+Centralized Version Controlling: 
+In a Centralized Version Controlling we have a remote server where version controlling happens. All the developers upload their source code into this remote server. On the individual developers machines, only source code is present. 
+Example: Apache SubVersion
+
+Distributed Version Controlling:
+In a Distributed Version Controlling System, we have a local repository installed on every developer's machines. Initially the developers commit their code in the local repository where version controlling happens at the level of individual developers. Later it will be uploaded into the remote repository where version controlling happens at the level of the entire team. 
+Example: Git
+
+
+In a Distributed Version Controlling System we can maintain bare repositories for individual teams which can be later merged with a centralized repository for the entire project. 
+
+
+Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
+Git is easy to learn and has a tiny footprint with lightning fast performance. It outclasses SCM tools like Subversion, CVS, Perforce, and ClearCase with features like cheap local branching, convenient staging areas, and multiple workflows.
+ref: https://git-scm.com/about
+
+Companies Using Git: Google, Microsoft, LinkedIn, Twitter, Netflix, etc.,
+
+Installing Git on windows:
+Step1: 	Download git from https://git-scm.com/downloads
+Step2:    Run the installer
+
+Installing Git on Linux:
+Step1: Update the apt repository      sudo apt-get update
+Step2: Install Git                                  sudo apt-get install -y git
+
+
+Configuring Git for the first time:
+
+
+git config --global user.name "your name"
+git config --global user.email "your email"
+git config --global push.default current

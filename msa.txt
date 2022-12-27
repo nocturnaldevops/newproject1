@@ -1,0 +1,51 @@
+Master Slave Architecture
+Distributed Jenkins Build
+
+3 EC2 instances (ubuntu 20.04)
+   0. update apt repository
+   1. Java
+   
+Advanced: 
+#!/bin/bash
+sudo apt-get update
+sudo apt-get install -y default-jdk
+
+Server1 (DevServer)
+===================
+install jenkins (jenkins.io)
+ssh-keygen  (generate ssh keys)
+Configure Jenkins  (unlock jenkins, create user, install suggested plugins)
+
+Slave1 
+======
+add passwordless ssh authentication
+add password to ubuntu user
+copy a file slave.jar from jenkins server
+add executable permissions on slave.jar
+create a workdirectory on slave1
+
+Slave2
+======
+add passwordless ssh authentication
+add password to ubuntu user
+copy a file slave.jar from jenkins server
+add executable permissions on slave.jar
+create a workdirectory on slave1
+
+Jenkins Server:
+===============
+Copy SSH keys to Slave1 and Slave2
+Open Jenkins Application
+
+Manage Jenkins  ---> Manage nodes and clouds
+Add node:
+
+name to slave node
+description
+no of executors : 1
+workdirectory: 
+command to connect: Launch agent by running a command
+ssh ubuntu@"privateipofslave1" 'java -jar slave.jar'
+keep this agent online as much as possible
+
+((Save))

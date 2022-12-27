@@ -1,0 +1,23 @@
+node
+{
+    stage("contdownload")
+    {
+        git branch: 'main', url: 'https://github.com/nocturnaldevops/Project1.git'
+    }
+    stage("contBuild")
+    {
+        sh 'mvn package'
+    }
+    stage("contdeployment")
+    {
+        sh 'scp /var/lib/jenkins/workspace/pipeline/target/devops.war ubuntu@172.31.22.8:/var/lib/tomcat9/webapps/testexample'
+    }
+        stage("ContTest")
+    {
+        sh 'echo "Testing Passed"'
+    }
+        stage("contdelivery")
+    {
+        sh 'scp /var/lib/jenkins/workspace/pipeline/target/devops.war ubuntu@172.31.20.81:/var/lib/tomcat9/webapps/prodexample'
+    }
+}
