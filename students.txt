@@ -7,3 +7,4 @@ Srikanth
 Trainer : Prashanth
 GCP Trainer: Mahesh
 Azure Trainer: Lakshmana
+Python Trainer: Durga Prasad
